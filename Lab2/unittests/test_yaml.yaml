@@ -1,0 +1,50 @@
+__class__: Scholarship
+__type__: object
+base:
+  __args__:
+    co_argcount: 1
+    co_cellvars: []
+    co_code:
+    - 124
+    - 0
+    - 106
+    - 0
+    - 116
+    - 1
+    - 20
+    - 0
+    - 83
+    - 0
+    co_consts:
+    - '!None'
+    co_filename: "/home/lesha/\u0420\u0430\u0431\u043E\u0447\u0438\u0439/GitISP/Lab2/Examples.py"
+    co_firstlineno: 18
+    co_flags: 67
+    co_freevars: []
+    co_kwonlyargcount: 0
+    co_lnotab:
+    - 0
+    - 1
+    co_name: base
+    co_names:
+    - coefficient
+    - multiplier
+    co_nlocals: 1
+    co_posonlyargcount: 0
+    co_stacksize: 2
+    co_varnames:
+    - self
+  __globals__:
+    multiplier: 4
+  __name__: base
+  __type__: function
+coefficient: 1.6
+name: Lesha
+samples:
+- Lesha
+- gets
+- a
+- sholarship
+- since
+- 1
+- semester
