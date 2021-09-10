@@ -48,12 +48,10 @@ class Yaml:
 
     def to_str_collection(self, obj, name, tab):
         res = ''
-        if len(name):                    
-            if len(obj) == 0:
-                res += f'{name}: []\n'
-                return res
+        if len(name):
             res += f'{name}:\n'
-    
+        res += tab + '- '+ f"'__{type(obj).__name__}__'"+ '\n'
+
         for x in obj:
             if isinstance(x, str):
                 res += tab + '- '+ f"'{self.to_str(x)}'" + '\n'
@@ -102,9 +100,13 @@ class Yaml:
 
     def from_str_str(self, s):
         res = ""
-
-        while self.pos < len(s) and s[self.pos] != ':' and s[self.pos] != '\n':
+        opened = False
+        while self.pos < len(s) and s[self.pos] not in(':', '\n') or opened:
             if s[self.pos] == "'":
+                if opened:
+                    opened = False
+                else:
+                    opened = True
                 self.pos += 1
                 continue
             res += s[self.pos]
@@ -135,9 +137,16 @@ class Yaml:
 
     def from_str_collection(self, s, tab):
         res = []
-        if s[self.pos] == '[':
-            self.pos += 3
+        self.pos += len(tab)
+        self.pos += 2
+        s_type = self.from_str_str(s)
+        if tab + '-' != s[self.pos:self.pos + len(tab) + 1]:
+            if s_type == '__tuple__':
+                return tuple(res)
+            elif s_type == '__set__':
+                return set(res)
             return res
+
         self.pos += len(tab)
         while self.pos < len(s):
             self.pos += 2
@@ -146,6 +155,10 @@ class Yaml:
             if tab + '-' != s[self.pos:self.pos + len(tab) + 1]:
                 break
             self.pos += len(tab)
+        if s_type == '__tuple__':
+            return tuple(res)
+        elif s_type == '__set__':
+            return set(res)
         return res
 
     def from_str_dict(self, s, tab):

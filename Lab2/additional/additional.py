@@ -21,12 +21,16 @@ def get_global_vars(func):
 
 
 def pack_iterable(obj):
-    if isinstance(obj, list) or isinstance(obj, tuple):
+    if isinstance(obj, list) or isinstance(obj, tuple) or isinstance(obj, set):
         packed_iterable = []
         for value in obj:
             if value is None:
                 packed_iterable.append("!None")
             packed_iterable.append(convert(value))
+        if isinstance(obj, tuple):
+            return tuple(packed_iterable)
+        if isinstance(obj, set):
+            return set(packed_iterable)
         return packed_iterable
     elif isinstance(obj, dict):
         packed_dict = {}
@@ -36,12 +40,16 @@ def pack_iterable(obj):
 
 
 def unpack_iterable(obj):
-    if isinstance(obj, list) or isinstance(obj, tuple):
+    if isinstance(obj, list) or isinstance(obj, tuple) or isinstance(obj, set):
         unpacked_iterable = []
         for value in obj:
             if value == "!None":
                 unpacked_iterable.append(None)
             unpacked_iterable.append(deconvert(value))
+        if isinstance(obj, tuple):
+            return tuple(unpacked_iterable)
+        if isinstance(obj, set):
+            return set(unpacked_iterable)
         return unpacked_iterable
     elif isinstance(obj, dict):
         unpacked_dict = {}

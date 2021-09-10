@@ -55,11 +55,8 @@ class Toml():
     def to_str_collection(self, obj, name):
         res = ''
         if len(name):                    
-            if len(obj) == 0:
-                res += f'{name} = []\n'
-                return res
             res += f'{name} = '
-        res += '['
+        res += '[ ' + f'"__{type(obj).__name__}__", '    
         for x in obj:
             if isinstance(x, str): 
                 res += ' '+ f'"{self.to_str(x)}"' + ','
@@ -115,9 +112,13 @@ class Toml():
 
     def from_str_str(self, s):
         res = ""
-
-        while self.pos < len(s) and s[self.pos] not in ('\n', ',', ' '):
+        opened = False
+        while self.pos < len(s) and s[self.pos] not in ('\n', ',', ' ') or opened:
             if s[self.pos] == '"':
+                if opened:
+                    opened = False
+                else:
+                    opened = True
                 self.pos += 1
                 continue
             res += s[self.pos]
@@ -148,12 +149,18 @@ class Toml():
 
     def from_str_collection(self, s):
         res = []
+        self.pos += 2
+        s_type = self.from_str_str(s)
         self.pos += 1
         while self.pos < len(s) and s[self.pos] != ']':
             self.pos += 1
             v = self.from_str(s)
             res.append(v)
         self.pos += 2
+        if s_type == '__tuple__':
+            return tuple(res)
+        elif s_type == '__set__':
+            return set(res)
         return res
 
     def from_str_dictname(self, s):

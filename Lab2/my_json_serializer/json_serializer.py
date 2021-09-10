@@ -146,6 +146,10 @@ class Json:
                 break
             self.pos += 1
         self.pos += 1
+        if s_type == '__tuple__':
+            return tuple(res)
+        elif s_type == '__set__':
+            return set(res)
         return res
 
     def from_str_dict(self, s):
