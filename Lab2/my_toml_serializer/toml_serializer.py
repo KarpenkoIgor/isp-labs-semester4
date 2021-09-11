@@ -61,7 +61,6 @@ class Toml():
                 res += ' '+ f'"{self.to_str(x)}"' + ','
             else:
                 res += ' '+ self.to_str(x) + ','
-
         res += ']\n'
         return res
 
@@ -83,11 +82,9 @@ class Toml():
             if res[-2:] == '\n\n' and path != '':
                 res += f'[{path}]\n'
             new_res = self.to_str(v, self.to_str(str(k)), path)
-
             res += new_res
             if res[-1] != '\n':
                 res += '\n'
-
         if res[-2:] != '\n\n':
             res += '\n'
         return res
@@ -124,8 +121,7 @@ class Toml():
                 self.pos += 1
                 continue
             res += s[self.pos]
-            self.pos += 1
-        
+            self.pos += 1        
         self.pos += 1
         return res
 
@@ -167,26 +163,20 @@ class Toml():
 
     def from_str_dictname(self, s):
         res = ""
-
         while self.pos < len(s) and s[self.pos] not in (']', '.'):
             res += s[self.pos]
-            self.pos += 1
-    
+            self.pos += 1    
         return res
 
     def from_str_dict(self, s, curr_dict):
         res = {}
-
         if curr_dict != {}:
-            res = curr_dict
-        
+            res = curr_dict        
         if s[self.pos] == ']':
-            self.pos += 2
-        
+            self.pos += 2        
         if s[self.pos] == '\n':
             self.depth -= 1
             return res
-
         if s[self.pos] == '.':
             self.pos += 1
             k = self.from_str_dictname(s)
@@ -197,7 +187,6 @@ class Toml():
             else:
                 v = self.from_str_dict(s, v)
             res[k] = v
-
         while self.pos < len(s):   
             if s[self.pos] == '\n':
                 if self.depth != 0:
@@ -224,6 +213,4 @@ class Toml():
                 self.pos += 2
                 v = self.from_str(s) 
             res[k] = v
-
-
         return res

@@ -34,8 +34,7 @@ class Yaml:
     def to_str_primitive(self, obj, name, tab):
         res = ''
         if  name != '':
-            res += f'{name}: '
-        
+            res += f'{name}: '        
         if obj is None:
             res += 'null'
         elif isinstance(obj, bool):
@@ -51,14 +50,11 @@ class Yaml:
         if len(name):
             res += f'{name}:\n'
         res += tab + '- '+ f"'__{type(obj).__name__}__'"+ '\n'
-
         for x in obj:
             if isinstance(x, str):
                 res += tab + '- '+ f"'{self.to_str(x)}'" + '\n'
             else:
                 res += tab + '- '+ self.to_str(x) + '\n'
-        res[:-1]
-
         return res
 
     def to_str_dict(self, obj, name, tab):
@@ -70,12 +66,10 @@ class Yaml:
                 return res 
             res += '\n'
             tab += '  '
-
         for k, v in obj.items():
             res += tab + self.to_str(v, self.to_str(str(k)), tab)
             if res[-1] != '\n':
-                res += '\n'
-    
+                res += '\n'    
         return res
 
     def from_str(self, s, tab=''):
@@ -110,8 +104,7 @@ class Yaml:
                 self.pos += 1
                 continue
             res += s[self.pos]
-            self.pos += 1
-        
+            self.pos += 1        
         self.pos += 1
         return res
 
@@ -146,7 +139,6 @@ class Yaml:
             elif s_type == '__set__':
                 return set(res)
             return res
-
         self.pos += len(tab)
         while self.pos < len(s):
             self.pos += 2
@@ -166,7 +158,6 @@ class Yaml:
         if s[self.pos] == '{':
             self.pos += 3
             return res
-
         while self.pos < len(s):
             new_tab = ''
             while s[self.pos] == ' ':
@@ -186,6 +177,5 @@ class Yaml:
             elif len(new_tab) < len(tab):
                 self.pos -= len(new_tab)
                 return res
-
             res[k] = v
         return res

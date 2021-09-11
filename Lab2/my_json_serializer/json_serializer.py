@@ -35,8 +35,7 @@ class Json:
     def to_str_primitive(self, obj, name):
         res = ''
         if  name != '':
-            res += f'{name}: '
-        
+            res += f'{name}: '        
         if obj is None:
             res += 'null'
         elif isinstance(obj, bool):
@@ -52,10 +51,8 @@ class Json:
         if len(name):
             res += f'{name}: '
         res += '[' + f'"__{type(obj).__name__}__", '
-
         for x in obj:
             res += self.to_str(x) + ', '
-
         if len(res) > 2 and res[-2] == ',':
             res = res[:-2]
         res += ']'
@@ -66,10 +63,8 @@ class Json:
         if len(name):
             res += f'{name}: '
         res += '{'
-
         for k, v in obj.items():
-            res += self.to_str(v, self.to_str(str(k))) + ', '
-        
+            res += self.to_str(v, self.to_str(str(k))) + ', '        
         if len(res) > 2 and res[-2] == ',':
             res = res[:-2]
             self.pos -= 2
@@ -98,14 +93,11 @@ class Json:
     def from_str_str(self, s):
         res = ""
         self.pos += 1
-
         if s[self.pos] == '"':
             self.pos += 1
-
         while self.pos < len(s) and s[self.pos] not in ('"', "'"):
             res += s[self.pos]
-            self.pos += 1
-        
+            self.pos += 1        
         self.pos += 1
         return res
 
@@ -133,15 +125,12 @@ class Json:
         res = []
         self.pos += 1
         s_type = self.from_str_str(s)
-
         while self.pos < len(s) and s[self.pos] not in (']', '}', ')'):
             if s[self.pos] == ' ' or s[self.pos] == ',':
                 self.pos += 1
                 continue
-
             v = self.from_str(s)
             res.append(v)
-
             if self.pos < len(s) and s[self.pos] in (']', '}', ')'):
                 break
             self.pos += 1
@@ -155,12 +144,10 @@ class Json:
     def from_str_dict(self, s):
         res = {}
         self.pos += 1
-
         while self.pos < len(s) and s[self.pos] != '}':
             while s[self.pos] in (' ', ','):
                 self.pos += 1
-                continue
-            
+                continue            
             k = self.from_str_str(s)
             self.pos = s.find(':', self.pos)+2
             v = self.from_str(s)

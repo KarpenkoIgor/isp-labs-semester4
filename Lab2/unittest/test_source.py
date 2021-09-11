@@ -14,7 +14,6 @@ class SimpleClass:
         self.can_say = True
         self.count = 5
         self.word = "ku"
-
     def say_kuku(self):
         return self.word * self.count
 
@@ -23,7 +22,6 @@ class ComplexClass:
         self.simple_class = SimpleClass()
         self.const = int_glob
         self.name = 'CmplexClass'
-
     def func_with_glob(self):
         return "local_str" + str_glob
 
