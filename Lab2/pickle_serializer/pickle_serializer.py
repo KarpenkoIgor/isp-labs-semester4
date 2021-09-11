@@ -2,7 +2,7 @@ import pickle
 from additional.additional import convert, deconvert
 
 class Pickle:
-    def dump(obj,fp):
+    def dump(self, obj, fp):
         return pickle.dump(convert(obj),open(fp,'wb'))
 
     def dumps(self, obj):
