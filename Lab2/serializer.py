@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import argparse
 import configparser
 from pathlib import Path

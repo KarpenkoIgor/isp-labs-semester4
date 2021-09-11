@@ -37,8 +37,7 @@ class Toml():
     def to_str_primitive(self, obj, name):
         res = ''
         if  name != '':
-            res += f'{name} = '
-        
+            res += f'{name} = '        
         if obj is None:
             res += 'null'
         elif isinstance(obj, bool):
@@ -64,7 +63,6 @@ class Toml():
                 res += ' '+ self.to_str(x) + ','
 
         res += ']\n'
-
         return res
 
     def to_str_dict(self, obj, name, path):
@@ -81,13 +79,17 @@ class Toml():
             if obj == {}:
                 return res 
 
-
         for k, v in obj.items():
-            res += self.to_str(v, self.to_str(str(k)), path)
+            if res[-2:] == '\n\n' and path != '':
+                res += f'[{path}]\n'
+            new_res = self.to_str(v, self.to_str(str(k)), path)
+
+            res += new_res
             if res[-1] != '\n':
                 res += '\n'
 
-        res += '\n'
+        if res[-2:] != '\n\n':
+            res += '\n'
         return res
 
     def from_str(self, s, curr_dict={}):
