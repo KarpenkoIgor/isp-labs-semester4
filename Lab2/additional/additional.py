@@ -25,7 +25,7 @@ def pack_iterable(obj):
         packed_iterable = []
         for value in obj:
             if value is None:
-                packed_iterable.append("!None")
+                packed_iterable.append(None)
             packed_iterable.append(convert(value))
         if isinstance(obj, tuple):
             return tuple(packed_iterable)
@@ -43,7 +43,7 @@ def unpack_iterable(obj):
     if isinstance(obj, list) or isinstance(obj, tuple) or isinstance(obj, set):
         unpacked_iterable = []
         for value in obj:
-            if value == "!None":
+            if value == None:
                 unpacked_iterable.append(None)
             unpacked_iterable.append(deconvert(value))
         if isinstance(obj, tuple):
@@ -80,7 +80,7 @@ def pack_function(obj):
                     if val is not None:
                         converted_vals.append(convert(val))
                     else:
-                        converted_vals.append("!None")
+                        converted_vals.append(None)
                 arguments[key] = converted_vals
                 continue
             arguments[key] = value
@@ -110,7 +110,7 @@ def unpack_function(src):
         if is_iterable(arguments[val]) and not isinstance(arguments[val], str):
             temp_ls = []
             for value in arguments[val]:
-                if value == "!None":
+                if value == None:
                     temp_ls.append(None)
                 else:
                     temp_ls.append(value)
