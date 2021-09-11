@@ -175,6 +175,8 @@ class Yaml:
             if len(new_tab) >= len(tab):
                 tab = new_tab
                 k = self.from_str_str(s)
+                if self.pos >= len(s):
+                    return k
                 if s[self.pos] == ' ':
                     self.pos += 1
                     v = self.from_str(s, new_tab)

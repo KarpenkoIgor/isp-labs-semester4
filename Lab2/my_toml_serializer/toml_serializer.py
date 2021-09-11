@@ -216,7 +216,9 @@ class Toml():
                 else: 
                     continue
             else:    
-                k = self.from_str_str(s)   
+                k = self.from_str_str(s)  
+                if self.pos >= len(s):
+                    return k
                 self.pos += 2
                 v = self.from_str(s) 
             res[k] = v

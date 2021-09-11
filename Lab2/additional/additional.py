@@ -2,7 +2,7 @@ import builtins
 import inspect
 from types import FunctionType, CodeType, LambdaType
 
-primitives = (int, str, bool, float)
+primitives = (int, str, bool, float,)
 
 def is_iterable(obj):
     return getattr(obj, "__iter__", None) is not None
@@ -175,6 +175,8 @@ def unpack_class(src):
 def convert(obj):
     if isinstance(obj, primitives):
         return obj
+    elif obj is None:
+        return None
     elif is_function(obj):
         return pack_function(obj)
     elif inspect.iscode(obj):
