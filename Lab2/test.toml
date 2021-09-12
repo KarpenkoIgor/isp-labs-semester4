@@ -1,0 +1,23 @@
+__type__ = "function"
+__name__ = "simple_func"
+
+[__globals__]
+
+[__args__]
+co_argcount = 1
+co_cellvars = [ "__list__", ]
+co_code = [ "__list__",  124, 0, 100, 1, 23, 0, 83, 0,]
+co_consts = [ "__list__",  "!None", 10,]
+co_filename = "/home/karpenko/Labs_ISP/isp-labs-semester4/Lab2/unittest/test_source.py"
+co_firstlineno = 34
+co_flags = 67
+co_freevars = [ "__list__", ]
+co_kwonlyargcount = 0
+co_lnotab = [ "__list__",  0, 1,]
+co_name = "simple_func"
+co_names = [ "__list__", ]
+co_nlocals = 1
+co_posonlyargcount = 0
+co_stacksize = 2
+co_varnames = [ "__list__",  "a",]
+
