@@ -8,7 +8,7 @@ def is_iterable(obj):
     return getattr(obj, "__iter__", None) is not None
 
 
-def is_function(obj):
+def wis_function(obj):
     return inspect.isfunction(obj) or inspect.ismethod(obj) or isinstance(obj, LambdaType)
 
 
