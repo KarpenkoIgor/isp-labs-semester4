@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-4">
+        <img src="{{ carpart.image.url }}" class="img-fluid">
+    </div>
+    <div class="col-md-8">
+        <h3>{{ carpart.title }}</h3>
+        <p>Цена: {{ carpart.price }} руб.</p>
+        <p>Производитель: {{ carpart.manufacturer.name}}({{ carpart.manufacturer.country }})</p>
+    </div>
+</div>
+
+
+
+{% endblock content %}
