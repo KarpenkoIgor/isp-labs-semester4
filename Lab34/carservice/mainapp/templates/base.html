@@ -48,9 +48,9 @@
 
       <div class="col-lg-3 mt-5">
         <div class="list-group">
-
-          <a href="#" class="list-group-item"></a>
-
+          {% for category in categories %}
+          <a href="{{ category.url }}" class="list-group-item">{{ category.name }} ({{ category.count }})</a>
+          {% endfor %}
         </div>
 
       </div>
@@ -93,21 +93,22 @@
         </div>
 
         <div class="row">
+          {% for carpart in carparts %}
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="#" alt=""></a>
+              <a href="{{ carpart.get_absolute_url }}"><img class="card-img-top" src="{{ carpart.image.url}}" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  <a href="#"></a>
+                  <a href="{{ carpart.get_absolute_url }}">{{ carpart.title }}</a>
                 </h4>
-                <h5></h5>
+                <h5>{{ carpart.price }} руб.</h5>
                 <a href="#">
                   <button class="btn btn-danger">Добавить в корзину</button>
                 </a>
               </div>
             </div>
           </div>
-
+            {% endfor %}
         </div>
         <!-- /.row -->
         {% endblock content %}

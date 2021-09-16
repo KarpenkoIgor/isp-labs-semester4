@@ -62,7 +62,7 @@ class ExhaustSystemAdmin(admin.ModelAdmin):
     
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'category':
-            return ExhaustSystemCategoryChoiceField(Category.objects.filter(slug='exhaustsystems'))
+            return ExhaustSystemCategoryChoiceField(Category.objects.filter(slug='exhaust-systems'))
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
@@ -74,7 +74,7 @@ class FuelSystemAdmin(admin.ModelAdmin):
     
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'category':
-            return FuelSystemCategoryChoiceField(Category.objects.filter(slug='fuelsystems'))
+            return FuelSystemCategoryChoiceField(Category.objects.filter(slug='fuel-systems'))
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(Manufacturer)
