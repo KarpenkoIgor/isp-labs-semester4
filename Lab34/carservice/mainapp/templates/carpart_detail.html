@@ -18,6 +18,8 @@
         <h3>{{ carpart.title }}</h3>
         <p>Цена: {{ carpart.price }} руб.</p>
         <p>Производитель: {{ carpart.manufacturer.name}}({{ carpart.manufacturer.country }})</p>
+        <hr>
+        <a href="{% url 'add_to_cart' ct_model=ct_model slug=carpart.slug %}"><button class="btn btn-danger">Добавить в корзину</button></a>
     </div>
     <p class = "mt-4">Параметры:</p>
     {% if carpart.category.slug == 'filters'%}

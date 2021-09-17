@@ -187,7 +187,11 @@ class CartProduct(models.Model):
     total_cost = models.DecimalField(max_digits=9, decimal_places=2, verbose_name='Общая стоимость')
 
     def __str__(self):
-        return 'Деталь: {} (в корзину)'.format(self.car_part.title)
+        return 'Деталь: {} (в корзину)'.format(self.content_object.title)
+
+    def save(self, *args, **kwargs):
+        self.total_cost = self.qty * self.content_object.price
+        super().save(*args, **kwargs)
 
 
 class Cart(models.Model):
