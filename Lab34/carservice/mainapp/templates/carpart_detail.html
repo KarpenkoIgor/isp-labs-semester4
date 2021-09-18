@@ -22,19 +22,6 @@
         <a href="{% url 'add_to_cart' ct_model=ct_model slug=carpart.slug %}"><button class="btn btn-danger">Добавить в корзину</button></a>
     </div>
     <p class = "mt-4">Параметры:</p>
-    {% if carpart.category.slug == 'filters'%}
-        {% include 'filter_specification.html'%}
-    {% elif carpart.category.slug == 'breaks'%}
-        {% include 'breaks_specification.html'%}
-    {% elif carpart.category.slug == 'ignitions'%}
-        {% include 'ignition_specification.html'%}
-    {% elif carpart.category.slug == 'suspensions'%}
-        {% include 'suspension_specification.html'%}
-    {% elif carpart.category.slug == 'exhaust-systems'%}
-        {% include 'exhaust_system_specification.html'%}
-    {% elif carpart.category.slug == 'fuel-systems'%}
-        {% include 'fuel_system_specification.html'%}
-    {% endif %}
 </div>
 
 

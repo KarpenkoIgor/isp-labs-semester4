@@ -16,9 +16,9 @@
     <tbody>
     {% for item in cart.products.all %}
       <tr>
-        <th scope="row">{{ item.content_object.title }}</th>
-        <td class="w-25"><img src="{{ item.content_object.image.url }}" class="img-fluid"></td>
-        <td>{{ item.content_object.price }} руб.</td>
+        <th scope="row">{{ item.carpart.title }}</th>
+        <td class="w-25"><img src="{{ item.carpart.image.url }}" class="img-fluid"></td>
+        <td>{{ item.carpart.price }} руб.</td>
         <td>{{ item.qty }}</td>
         <td>{{ item.total_cost }} руб.</td>
       </tr>
@@ -33,7 +33,8 @@
   </table>
   <hr>
   <h3 class="text-center mt-5 mb-5">Форма заказа</h3>
-  <form action="" method="POST">
+  <form action="{% url 'make_order' %}" method="POST">
+    {% csrf_token %}
     {{ form|crispy }}
     <input type="submit" class="btn btn-success btn-block mb-3" values="Оформить заказ">
   </form>
