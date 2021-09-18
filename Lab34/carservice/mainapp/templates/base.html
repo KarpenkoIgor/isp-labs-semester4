@@ -102,7 +102,7 @@
                   <a href="{{ carpart.get_absolute_url }}">{{ carpart.title }}</a>
                 </h4>
                 <h5>{{ carpart.price }} руб.</h5>
-                <a href="#">
+                <a href="{% url 'add_to_cart' ct_model=carpart.get_model_name slug=carpart.slug %}">
                   <button class="btn btn-danger">Добавить в корзину</button>
                 </a>
               </div>
