@@ -46,17 +46,16 @@
           </li>
           {% if not request.user.is_authenticated %}
             <li>
-              <a class="nav-link text-light" href="#">Авторизация</a>
+              <a class="nav-link text-light" href="{% url 'login' %}">Авторизация</a>
             </li>
             <li>
-              <a class="nav-link text-light" href="#">Регистрация</a>
+              <a class="nav-link text-light" href="{% url 'registration' %}">Регистрация</a>
             </li>
-          {% endif %}
+          {% else %}
           <li class="nav-item">
-            {% if request.user.is_authenticated %}<span class="navbar text text-light">Добро пожаловать, <span class="badge badge-danger">
-              <a style="text-decoration: none; font-size: 14px; color: white;" href="#">{{ request.user.username }}</a>{% endif %}
-            </span></span>
+            <span class="navbar-text text-light">Здравствуйте, {% if request.user.is_authenticated %}<span class="badge badge-danger"><a href="{% url 'profile' %}" style="text-decoration: none; font-size: 14px;">{{ request.user.username }}</a></span>{% else %} гоcть!{% endif %}<a href="{% url 'logout' %}">| Выйти</a></span>
           </li>
+          {% endif %}
         </ul>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
