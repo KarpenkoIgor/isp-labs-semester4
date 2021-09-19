@@ -14,7 +14,7 @@ from .models import (
     CartProduct,
     Order,
     )
-from .mixins import CartMixin
+from .mixins import CartMixin, CategoryDetailMixin
 from .forms import OrderForm, LoginForm, RegistrationForm
 from .utils import recalc_cart
 
@@ -22,7 +22,7 @@ from .utils import recalc_cart
 class BaseView(CartMixin, View):
     
     def get(self, request, *args, **kwargs):
-        categories = Category.objects.all()
+        categories = Category.objects.get_categories_for_left_sidebar()
         carparts = CarPart.objects.all()
         context ={
             'categories': categories,
@@ -32,9 +32,10 @@ class BaseView(CartMixin, View):
         return render(request, 'base.html', context)
 
 
-class CarpartDetailView(CartMixin, DetailView):
+class CarpartDetailView(CartMixin, CategoryDetailMixin, DetailView):
 
-
+    model = CarPart
+    queryset = CarPart.objects.all()
     context_object_name = 'carpart'
     template_name = 'carpart_detail.html'
     slug_url_kwarg = 'slug'
@@ -45,7 +46,7 @@ class CarpartDetailView(CartMixin, DetailView):
         return context
 
 
-class CategoryDetailView(CartMixin, DetailView):
+class CategoryDetailView(CartMixin, CategoryDetailMixin, DetailView):
 
     model = Category
     queryset = Category.objects.all()
@@ -57,6 +58,7 @@ class CategoryDetailView(CartMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['cart'] = self.cart
         return context
+
 
 class AddToCartView(CartMixin, View):
 
@@ -107,7 +109,7 @@ class ChangeQTYView(CartMixin, View):
 class CartView(CartMixin, View):
 
     def get(self, request, *args, **kwargs):
-        categories = Category.objects.all()
+        categories = Category.objects.get_categories_for_left_sidebar()
         context = {
             'cart': self.cart,
             'categories': categories,
@@ -117,7 +119,7 @@ class CartView(CartMixin, View):
 class CheckoutView(CartMixin, View):
 
     def get(self, request, *args, **kwargs):
-        categories = Category.objects.all()
+        categories = Category.objects.get_categories_for_left_sidebar()
         form = OrderForm(request.POST or None)
         context = {
             'cart': self.cart,
@@ -233,7 +235,7 @@ class ProfileView(CartMixin, View):
     def get(self,request, *args, **kwargs):
         customer = Customer.objects.get(user=request.user)
         orders = Order.objects.filter(customer=customer).order_by('-created_at')
-        categories = Category.objects.all()
+        categories = Category.objects.get_categories_for_left_sidebar()
         return render(
             request,
             'profile.html',

@@ -14,9 +14,27 @@ class Manufacturer(models.Model):
     def __str__(self):
         return self.name
 
+
+class CategoryManager(models.Manager):
+
+    def get_queryset(self):
+        return super().get_queryset()
+    
+    def get_categories_for_left_sidebar(self):
+        qs = list(self.get_queryset())
+        data = [
+            dict(
+                name=category.name, url=category.get_absolute_url(), count=CarPart.objects.filter(category=category).count()
+            )
+            for category in qs
+        ]
+        return data
+
+
 class Category(models.Model):
     name = models.CharField(max_length=150, verbose_name='Тип детали')
     slug = models.SlugField(unique=True)
+    objects = CategoryManager()
 
     def __str__(self):
         return self.name
