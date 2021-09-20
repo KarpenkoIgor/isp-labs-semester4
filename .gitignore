@@ -1,3 +1,6 @@
 **/venv
+**/env
+**/testdocker
 **/.idea
 **/__pycache__
+.coverage

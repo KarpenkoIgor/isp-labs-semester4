@@ -5,6 +5,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.views.generic import DetailView, View
 from django.contrib.contenttypes.models import ContentType
+import logging
+import configparser
+from threading import Thread
 
 from .models import (
     CarPart,
@@ -17,6 +20,15 @@ from .models import (
 from .mixins import CartMixin, CategoryDetailMixin
 from .forms import OrderForm, LoginForm, RegistrationForm
 from .utils import recalc_cart
+
+
+config = configparser.ConfigParser()
+config.read('cnf.ini')
+logging.basicConfig(
+    level=config['LOGGING']['level'],
+    filename=config['LOGGING']['filename']
+)
+log = logging.getLogger(__name__)
 
 
 class BaseView(CartMixin, View):
@@ -75,6 +87,9 @@ class AddToCartView(CartMixin, View):
             self.cart.products.add(cart_product)
         recalc_cart(self.cart)
         messages.add_message(request, messages.INFO, "Товар успешно добавлен")
+
+        p = Thread(target=log.info, args=("{} product added".format(carpart.title),))
+        p.start()
         return HttpResponseRedirect('/cart/')
 
 
@@ -90,6 +105,8 @@ class DeleteFromCartView(CartMixin, View):
         cart_product.delete()
         recalc_cart(self.cart)
         messages.add_message(request, messages.INFO, "Товар успешно удален")
+        p = Thread(target=log.info, args=("{} product deleted".format(carpart.title),))
+        p.start()
         return HttpResponseRedirect('/cart/')
 
 
@@ -106,6 +123,8 @@ class ChangeQTYView(CartMixin, View):
         cart_product.save()
         recalc_cart(self.cart)
         messages.add_message(request, messages.INFO, "Количество товара успешно изменено")
+        p = Thread(target=log.info, args=("{} quantity changed".format(carpart.title),))
+        p.start()
         return HttpResponseRedirect('/cart/')
 
 
@@ -152,8 +171,11 @@ class MakeOrderView(CartMixin, View):
             self.cart.in_order = True
             self.cart.save()
             new_order.cart = self.cart
+
             new_order.save()
             customer.orders.add(new_order)
+            p = Thread(target=log.info, args=("{} user made order".format(form.cleaned_data['first_name'])))
+            p.start()
             messages.add_message(request, messages.INFO, 'Спасибо за заказ! Менеджер с Вами свяжется')
             return HttpResponseRedirect('/')
         return HttpResponseRedirect('/checkout/')
@@ -180,6 +202,8 @@ class LoginView(CartMixin, View):
                 username=username, password=password
             )
             if user:
+                p = Thread(target=log.info, args=("User loged in"))
+                p.start()
                 login(request, user)
                 return HttpResponseRedirect('/')
         categories = Category.objects.get_categories_for_left_sidebar()
@@ -188,6 +212,8 @@ class LoginView(CartMixin, View):
             'cart': self.cart,
             'categories': categories
         }
+        p = Thread(target=log.info, args=("User can't login"))
+        p.start()
         return render(request, 'login.html', context)
 
 
@@ -223,6 +249,8 @@ class RegistrationView(CartMixin, View):
                 username=new_user.username, password=form.cleaned_data['password']
             )
             login(request, user)
+            p = Thread(target=log.info, args=("User registered in"))
+            p.start()
             return HttpResponseRedirect('/')
         categories = Category.objects.all()
         context = {
@@ -230,6 +258,8 @@ class RegistrationView(CartMixin, View):
             'categories': categories,
             'cart': self.cart
         }
+        p = Thread(target=log.info, args=("User can't register"))
+        p.start()
         return render(request, 'registration.html', context)
 
 
@@ -239,6 +269,8 @@ class ProfileView(CartMixin, View):
         customer = Customer.objects.get(user=request.user)
         orders = Order.objects.filter(customer=customer).order_by('-created_at')
         categories = Category.objects.get_categories_for_left_sidebar()
+        p = Thread(target=log.info, args=("User loged in"))
+        p.start()
         return render(
             request,
             'profile.html',
