@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from .models import Order
+from datetime import datetime
 
 User = get_user_model()
 
@@ -11,6 +12,13 @@ class OrderForm(forms.ModelForm):
         self.fields['order_date'].label = 'Дата получения заказа'
 
     order_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
+
+    def clean_order_date(self):
+        order_date = self.cleaned_data['order_date']
+        today_date = datetime.date(datetime.now())
+        if today_date >= order_date:
+            raise forms.ValidationError('Заказ может быть доставлен только с завтрашнего дня')
+        return order_date
 
     class Meta:
         model = Order

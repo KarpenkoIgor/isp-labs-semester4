@@ -63,6 +63,9 @@ class CategoryDetailView(CartMixin, CategoryDetailMixin, DetailView):
 class AddToCartView(CartMixin, View):
 
     def get(self, request, *args, **kwargs):
+        if self.cart.for_anonymous_user:
+            messages.add_message(request, messages.INFO, 'Для того, чтобы начать покупки необходимо авторизироваться!')
+            return HttpResponseRedirect('/')
         carpart_slug = kwargs.get('slug')
         carpart = CarPart.objects.get(slug=carpart_slug)
         cart_product, created = CartProduct.objects.get_or_create(

@@ -21,7 +21,7 @@ class CarserviceTestCases(TestCase):
         self.user = User.objects.create(username='testuser', password='password')
         self.category = Category.objects.create(name='Шины', slug='tyres')
         self.manufacturer = Manufacturer.objects.create(name='Ferrari', country='Италия')
-        image = SimpleUploadedFile("tyre1_image.jpg", content=b'', content_type="image/jpg")
+        image = SimpleUploadedFile("tyre1_image.png", content=b'', content_type="image/png")
         self.carpart = CarPart.objects.create(
             category=self.category,
             title='Pirreli H80',
@@ -36,7 +36,7 @@ class CarserviceTestCases(TestCase):
         self.cart_product = CartProduct.objects.create(
             user=self.customer,
             cart=self.cart,
-            product=self.product
+            product=self.carpart
         )
 
     def test_add_to_cart(self):
