@@ -179,7 +179,7 @@ class LoginView(CartMixin, View):
             if user:
                 login(request, user)
                 return HttpResponseRedirect('/')
-        categories = Category.objects.all()
+        categories = Category.objects.get_categories_for_left_sidebar()
         context = {
             'form': form,
             'cart': self.cart,
@@ -192,7 +192,7 @@ class RegistrationView(CartMixin, View):
 
     def get(self, request, *args, **kwargs):
         form = RegistrationForm(request.POST or None)
-        categories = Category.objects.all()
+        categories = Category.objects.get_categories_for_left_sidebar()
         context = {
             'form': form,
             'categories': categories,

@@ -95,13 +95,16 @@ class Cart(models.Model):
 
 class Customer(models.Model):
 
-    user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
+    user = models.OneToOneField(User, verbose_name='Пользователь', on_delete=models.CASCADE, primary_key=True)
     phone = models.CharField(max_length=30, verbose_name='Номер телефона', null=True, blank=True)
     address = models.CharField(max_length=50, verbose_name='Адрес', null=True, blank=True)
     orders = models.ManyToManyField('Order', verbose_name='Заказы покупателя', related_name='related_order')
 
     def __str__(self):
         return 'Покупатель: {} {}'.format(self.user.first_name, self.user.last_name)
+
+    def save(self, *args, **kwargs):
+        super(Customer, self).save(*args, **kwargs)
 
 
 class Order(models.Model):
