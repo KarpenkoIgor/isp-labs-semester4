@@ -7,21 +7,6 @@ from django.utils import timezone
 User = get_user_model()
 
 
-class LatestCarpartsManager:
-
-    @staticmethod
-    def get_carparts_for_main_page(*args, **kwargs):
-        carparts = []
-        carparts = CarPart.objects.all().order_by('-id')[:2]
-        return carparts
-
-
-class LatestCarparts:
-
-    objects = LatestCarpartsManager()
-
-
-
 class Manufacturer(models.Model):
     name = models.CharField(max_length=150, verbose_name='Название компании роизводителя')
     country = models.CharField(max_length=150, verbose_name='Страна компании роизводителя')
