@@ -16,20 +16,25 @@
   <!-- Custom styles for this template -->
   <link href="css/shop-homepage.css" rel="stylesheet">
   <style>
+    html {
+      height: 100%;
+    }
     body {
        background-image: url("/media/background1.png");
        background-size: 50%;
+       height: 100%;
+       padding-top: 56px;
+       min-height: 100%;
+      display: grid;
+      grid-template-rows: 1fr auto;
+    }
+    .card-img-top {
+    	height: 250px;
+    	object-fit: contain;
     }
  </style>
-
 </head>
-<style>
-    body {
-      padding-top: 50px;
-    }
-</style>
 <body>
-
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #0907b6;">
     <div class="container">
@@ -110,13 +115,12 @@
 
   </div>
 
-  <!-- Footer -->
+  <!-- Footer --> 
   <footer class="py-5" style="background-color: #0907b6;">
     <div class="container">
-      <p class="m-0 text-center text-white">Autoworld &copy; 2020 | hv.karpenko@gmail.com</p>
+      <p class="m-0 text-center text-white">Autoworld &copy; 2077 | hv.karpenko@gmail.com</p>
     </div>
   </footer>
-
   <!-- Bootstrap core JavaScript -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

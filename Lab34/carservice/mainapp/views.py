@@ -35,7 +35,7 @@ class BaseView(CartMixin, View):
     
     def get(self, request, *args, **kwargs):
         categories = Category.objects.get_categories_for_left_sidebar()
-        carparts = CarPart.objects.all()
+        carparts = CarPart.objects.all().order_by('-id')[:6]
         context ={
             'categories': categories,
             'carparts': carparts,
