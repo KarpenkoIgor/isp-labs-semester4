@@ -89,4 +89,9 @@ def test_cart_product(cart_product, customer, cart):
     assert CartProduct.objects.first() == cart_product
     assert CartProduct.objects.first().cart == cart
 
+@pytest.mark.django_db
+def test_cart(cart_product, customer, carpart, cart):
+    assert Cart.objects.count() == 1
+    assert carpart == cart_product.carpart
+    assert Cart.objects.first() == cart
 
