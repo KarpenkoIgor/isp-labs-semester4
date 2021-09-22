@@ -13,8 +13,9 @@ RUN apk add zlib-dev jpeg-dev gcc musl-dev
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY ./entrypoint.sh /docker-entrypoint.sh
+COPY . .
+COPY entrypoint.sh .
 
-RUN chmod +x /docker-entrypoint.sh
+RUN chmod +x /usr/src/app/entrypoint.sh
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
